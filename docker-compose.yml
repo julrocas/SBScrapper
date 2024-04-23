@@ -1,0 +1,6 @@
+services:
+  sbs_scrapper:
+    build: .
+    volumes:
+      - .:/app
+    command: "ruby sbs_scrapper.rb"
