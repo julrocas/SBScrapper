@@ -1,0 +1,29 @@
+name: Scrapper Workflow
+
+on:
+  schedule:
+    - cron: '0 * * * *' # Run every hour
+
+jobs:
+  run_scrapper:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Run scrapper with Docker
+        run: docker-compose up
+
+      - name: Commit changes
+        run: |
+          git config --global user.email "github-actions@example.com"
+          git config --global user.name "GitHub Actions"
+          git add sbs_data.json
+          git commit -m "Update sbs_data.json"
+
+      - name: Push changes
+        if: success()
+        uses: ad-m/github-push-action@master
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
