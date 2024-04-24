@@ -3,6 +3,7 @@ name: Scrapper Workflow
 on:
   schedule:
     - cron: '0 * * * *' # Run every hour
+  workflow_dispatch:
 
 jobs:
   run_scrapper:
