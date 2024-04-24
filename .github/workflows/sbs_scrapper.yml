@@ -19,8 +19,12 @@ jobs:
         run: |
           git config --global user.email "github-actions@example.com"
           git config --global user.name "GitHub Actions"
-          git add sbs_data.json
-          git commit -m "Update sbs_data.json"
+          if [[ -n $(git status --porcelain sbs_data.json) ]]; then
+            git add sbs_data.json
+            git commit -m "Update sbs_data.json"
+          else
+            echo "No changes to commit."
+          fi
 
       - name: Push changes
         if: success()
